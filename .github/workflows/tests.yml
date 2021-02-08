@@ -1,0 +1,28 @@
+name: Run Unit Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    container: python:3.9-slim
+    env:
+      SECRET_KEY: t3st1ng-SEcr3+-k3y
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run Unit Tests
+        run: |
+          python manage.py test
+      - name: Check Python Code Styling
+        run: |
+          pip install flake8 isort
+          flake8 --exit-zero --max-line-length 120 --exclude *migrations*
+          python -m isort . --line-length 120 --check-only --skip-glob '*migrations*'
