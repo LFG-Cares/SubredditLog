@@ -20,6 +20,8 @@ defusedxml==0.6.0
     # via python3-openid
 django-allauth==0.44.0
     # via -r requirements.in
+django-ordered-model==3.4.1
+    # via -r requirements.in
 django==3.1.6
     # via
     #   -r requirements.in

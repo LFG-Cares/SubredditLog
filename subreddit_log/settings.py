@@ -25,8 +25,10 @@ INSTALLED_APPS = [
 
     'allauth',
     'allauth.account',
+    'ordered_model',
 
     'accounts',
+    'entries',
 ]
 
 SITE_ID = 1
