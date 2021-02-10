@@ -1,0 +1,10 @@
+db.sqlite3
+docker-compose.yml
+LICENSE
+README.md
+*.pyc
+requirements.in
+.env.*
+.gitignore
+.git/
+.github/
