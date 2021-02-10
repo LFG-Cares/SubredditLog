@@ -1,0 +1,44 @@
+{% load url_tags %}
+{% if is_paginated %}
+  <nav aria-label="pagination">
+    <ul class="pagination">
+      <li class="page-item">
+        {% if page_obj.has_previous %}
+          <a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        {% else %}
+          <span class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">No Previous</span>
+          </span>
+        {% endif %}
+      </li>
+      {% for i in page_numbers %}
+        {% if i %}
+          {% if page_obj.number == i %}
+            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="?{% url_replace page=i %}">{{ i }}</a></li>
+          {% endif %}
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">...</span></li>
+        {% endif %}
+      {% endfor %}
+      <li class="page-item">
+        {% if page_obj.has_next %}
+          <a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}" aria-label="Previous">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        {% else %}
+          <span class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">No Next</span>
+          </span>
+        {% endif %}
+      </li>
+    </ul>
+  </nav>
+{% endif %}

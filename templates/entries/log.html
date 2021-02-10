@@ -1,0 +1,19 @@
+{% extends "_main.html" %}
+
+{% block content %}
+  <div class="container-fluid">
+    {% if user.is_authenticated %}
+      <div class="row mt-2 px-2 justify-content-end">
+        <a class="btn btn-info" href="{% url 'entry-create' %}">Add Entry</a>
+      </div>
+    {% endif %}
+    {% include 'entries/_entry_table.html' %}
+
+    {% if is_paginated %}
+      {% load pagination_tags %}
+      <div class="row mt-4 justify-content-center align-items-center">
+        {% get_pagination 1 2 %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

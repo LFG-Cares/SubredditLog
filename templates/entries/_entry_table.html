@@ -1,0 +1,38 @@
+<table class="table table-hover mt-2">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">User</th>
+      <th scope="col">Rule</th>
+      <th scope="col">Action</th>
+      {% if user.is_authenticated %}
+        <th scope="col">Mod</th>
+        <th scope="col">Notes</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in entries %}
+      <tr>
+        <td>{{ entry.date|date:"Y-m-d" }}</td>
+        <td><a target="_blank" href="https://www.reddit.com/u/{{ entry.user }}">/u/{{ entry.user }}</a></td>
+        <td>{{ entry.rule }}</td>
+        <td>{{ entry.action_string }}</td>
+        {% if user.is_authenticated %}
+          <td>{{ entry.moderator.username }}</td>
+          <td>{{ entry.notes }}</td>
+        {% endif %}
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="{% if user.is_authenticated %}6{% else %}4{% endif %}">
+          {% if table_type == 'search' %}
+            <b>No results for that search.</b>
+          {% else %}
+            <b>The mod log is currently empty.</b> <em>Strange...</em> 🤔
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

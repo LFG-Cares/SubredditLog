@@ -1,0 +1,25 @@
+{% extends "_main.html" %}
+
+{% block content %}
+  <div class="container my-2">
+    {% for rule in rules %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <h4 class="card-title">{{ rule.name|title }}</h4>
+          <p class="card-text">
+            {{ rule.description }}
+          </p>
+        </div>
+      </div>
+    {% empty %}
+      <div class="card border-warning">
+        <div class="card-body">
+          <h4 class="card-title">Rules Not Configured</h4>
+          <p class="card-text">
+            Uh oh! It looks like the administrator of this SubredditLog has not yet configured the rules.
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

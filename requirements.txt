@@ -26,6 +26,8 @@ django==3.1.6
     # via
     #   -r requirements.in
     #   django-allauth
+django_crispy_forms==1.11.0
+    # via -r requirements.in
 idna==2.10
     # via requests
 oauthlib==3.1.0

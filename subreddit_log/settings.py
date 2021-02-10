@@ -25,10 +25,12 @@ INSTALLED_APPS = [
 
     'allauth',
     'allauth.account',
+    'crispy_forms',
     'ordered_model',
 
     'accounts',
     'entries',
+    'pagination',
 ]
 
 SITE_ID = 1
@@ -48,7 +50,9 @@ ROOT_URLCONF = 'subreddit_log.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -60,6 +64,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'subreddit_log.wsgi.application'
 
@@ -99,6 +105,9 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+LOGIN_REDIRECT_URL = 'log-view'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'log-view'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

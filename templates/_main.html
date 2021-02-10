@@ -1,0 +1,49 @@
+{% extends "_base.html" %}
+
+{% block body %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="{% url 'log-view' %}">SubredditLog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item{% if request.resolver_match.url_name == 'log-view' %} active{% endif %}">
+          <a class="nav-link" href="{% url 'log-view' %}">
+            Mod Log {% if request.resolver_match.url_name == 'log-view' %} <span class="sr-only">(current)</span>{% endif %}
+          </a>
+        </li>
+        <li class="nav-item{% if request.resolver_match.url_name == 'rules-list' %} active{% endif %}">
+          <a class="nav-link" href="{% url 'rules-list' %}">
+            Rules {% if request.resolver_match.url_name == 'rules-list' %} <span class="sr-only">(current)</span>{% endif %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" target="_blank">Visit the Subreddit</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav flex-row justify-content-between ml-auto">
+        <li class="nav-item">
+          <form method="get" action="{% url 'search' %}" class="form-inline mr-auto my-2 my-lg-0" novalidate>
+            <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search">
+          </form>
+        </li>
+        <li class="nav-item">
+          {% if not user.is_authenticated %}
+            <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+          {% else %}
+            <form method="post" action="{% url 'account_logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="nav-link btn btn-link">Logout</button>
+            </form>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  {% block content %}
+  {% endblock %}
+{% endblock %}
