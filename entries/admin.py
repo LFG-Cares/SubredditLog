@@ -1,6 +1,7 @@
 from django.contrib import admin
 from ordered_model.admin import OrderedModelAdmin
 
+from entries.forms import EntryForm
 from entries.models import Entry, Rule
 
 
@@ -22,3 +23,10 @@ class EntryAdmin(admin.ModelAdmin):
         'rule',
         'action_string'
     )
+
+    form = EntryForm
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.moderator = request.user
+        obj.save()
