@@ -22,10 +22,15 @@ django-allauth==0.44.0
     # via -r requirements.in
 django-ordered-model==3.4.1
     # via -r requirements.in
+django-picklefield==3.0.1
+    # via django-constance
 django==3.1.6
     # via
     #   -r requirements.in
     #   django-allauth
+    #   django-picklefield
+django_constance[database]==2.8.0
+    # via -r requirements.in
 django_crispy_forms==1.11.0
     # via -r requirements.in
 idna==2.10

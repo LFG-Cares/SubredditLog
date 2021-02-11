@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from constance import config
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.urls import reverse
 from django.views.generic import CreateView, ListView
@@ -7,12 +8,19 @@ from entries.forms import EntryForm
 from entries.models import Entry, Rule
 
 
-class LogView(ListView):
+class LogView(UserPassesTestMixin, ListView):
     template_name = 'entries/log.html'
     model = Entry
     context_object_name = 'entries'
     queryset = Entry.objects.all()
     paginate_by = 25
+
+    def test_func(self):
+        if config.PUBLIC_MODLOG:
+            return True
+        elif self.request.user.is_authenticated:
+            return True
+        return False
 
 
 class RulesView(ListView):

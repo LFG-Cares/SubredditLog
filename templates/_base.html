@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.6.0/dist/darkly/bootstrap.min.css"
           integrity="sha256-CETRC0luEnm32Z1z91BT8xqiKfIzbspZ64YCq3T63xk=" crossorigin="anonymous">
 
-    <title>{% block title %}Subreddit Log{% endblock %}</title>
+    <title>{% block title %}{% if config.subreddit %}/r/{{ config.subreddit }}{% endif %} Subreddit Log{% endblock %}</title>
   </head>
   <body>
     {% block body %}

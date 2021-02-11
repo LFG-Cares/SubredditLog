@@ -2,7 +2,13 @@
 
 {% block body %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="{% url 'log-view' %}">SubredditLog</a>
+    <a class="navbar-brand" href="{% url 'log-view' %}">
+      {% if config.SUBREDDIT %}
+        /r/{{ config.SUBREDDIT }} Log
+      {% else %}
+        SubredditLog
+      {% endif %}
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -20,9 +26,11 @@
             Rules {% if request.resolver_match.url_name == 'rules-list' %} <span class="sr-only">(current)</span>{% endif %}
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" target="_blank">Visit the Subreddit</a>
-        </li>
+        {% if config.SUBREDDIT %}
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.reddit.com/r/{{ config.SUBREDDIT }}" target="_blank">Visit the Subreddit</a>
+          </li>
+        {% endif %}
       </ul>
       <ul class="navbar-nav flex-row justify-content-between ml-auto">
         <li class="nav-item">
