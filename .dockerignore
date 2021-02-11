@@ -8,3 +8,5 @@ requirements.in
 .gitignore
 .git/
 .github/
+docs/
+mkdocs.yml
