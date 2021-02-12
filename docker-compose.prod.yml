@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  app:
+    image: seancallaway/subredditlog:0.1
+    command: gunicorn subreddit_log.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - 8000
+    environment:
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=subreddit_log
+      - SQL_USER=srlog_user
+      - SQL_HOST=db
+      - SQL_PASSWORD=$DB_PASSWORD
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - SECRET_KEY=$SECRET_KEY
+      - DJANGO_ALLOWED_HOSTS=$ALLOWED_HOSTS
+    depends_on:
+      - db
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - psql_data:/var/lib/posgresql/data/
+    environment:
+      - POSTGRES_USER=srlog_user
+      - POSTGRES_DB=subreddit_log
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+  nginx:
+    image: seancallaway/subredditlog:0.1-nginx
+    ports:
+      - 7654:80
+    depends_on:
+      - app
+
+
+volumes:
+  psql_data:
+  static_files:

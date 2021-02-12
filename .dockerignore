@@ -10,3 +10,4 @@ requirements.in
 .github/
 docs/
 mkdocs.yml
+nginx/

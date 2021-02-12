@@ -1,0 +1,44 @@
+###########
+# BUILDER #
+###########
+FROM python:3.9-slim as builder
+
+WORKDIR /usr/src/app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update \
+    && apt-get -y install gcc postgresql \
+    && apt-get clean
+
+RUN pip install --upgrade pip
+RUN mkdir /install
+COPY ./requirements.txt .
+RUN pip install --no-warn-script-location --prefix=/install -r requirements.txt
+
+#########
+# FINAL #
+#########
+FROM python:3.9-slim
+
+RUN useradd --system -m app
+
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+
+COPY ./entrypoint.sh $APP_HOME
+
+RUN apt update \
+    && apt -y install netcat \
+    && apt-get clean
+COPY --from=builder /install /usr/local
+
+COPY . $APP_HOME
+
+RUN chown -R app:app $APP_HOME
+USER app
+
+ENTRYPOINT ["./entrypoint.sh"]

@@ -17,11 +17,11 @@ zip file and extract it to your desired path (e.g. `~/subredditlog/`).
 
 ## Configuration
 
-Move into the SubredditLog directory and make a copy of `env.config.example` named `env.config`. This file will hold 
+Move into the SubredditLog directory and make a copy of `.env.example` named `.env`. This file will hold 
 all of your local configuration parameters.
 
 ```shell
-cp env.config.example env.config
+cp .env.example .env
 ```
 
 Open `env.config` with your preferred text editor and configure each of the following required values:

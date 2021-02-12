@@ -3,5 +3,6 @@ django-allauth==0.44.0
 django_constance[database]==2.8.0
 django_crispy_forms==1.11.0
 django-ordered-model==3.4.1
+gunicorn==20.0.4
 pip-tools==5.5.0
 psycopg2-binary==2.8.6
