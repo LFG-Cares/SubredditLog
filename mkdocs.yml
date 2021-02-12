@@ -12,7 +12,7 @@ nav:
   - Installation:
       - Installing SubredditLog: 'installation/index.md'
       - 1. Docker Compose Stack: 'installation/1-compose.md'
-      - 2. HTTP Server: 'installation/2-http-.md'
+      - 2. HTTP Server: 'installation/2-http.md'
   - Usage:
       - Using SubredditLog: 'usage/index.md'
       - 1. Initial Configuration: 'usage/1-config.md'
