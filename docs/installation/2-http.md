@@ -74,7 +74,7 @@ sudo systemctl restart nginx
 At this point, you should be able to connect to the HTTPS service at the server name or IP address you provided.
 
 !!! info
-    Please keep in mind that the configurations provided here are bare minimums required to get NetBox up and running. 
+    Please keep in mind that the configurations provided here are bare minimums required to get SubredditLog up and running. 
 You may want to make adjustments to better suit your production environment.
 
 ## Troubleshooting
