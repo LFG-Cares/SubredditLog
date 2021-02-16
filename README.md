@@ -22,6 +22,9 @@ pip install -r requirements.txt
 
 ## Release History
 
+- 0.1.1
+  - Fixed bugs in styling of the admin panel
+  - Fixed various documentation bugs.
 - 0.1
   - Initial release
 
