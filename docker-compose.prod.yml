@@ -2,8 +2,13 @@ version: '3.7'
 
 services:
   app:
-    image: seancallaway/subredditlog:0.1
+    #image: seancallaway/subredditlog:0.1.1
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
     command: gunicorn subreddit_log.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_files:/home/app/web/staticfiles
     expose:
       - 8000
     environment:
@@ -27,7 +32,10 @@ services:
       - POSTGRES_DB=subreddit_log
       - POSTGRES_PASSWORD=$DB_PASSWORD
   nginx:
-    image: seancallaway/subredditlog:0.1-nginx
+    #image: seancallaway/subredditlog:0.1.1-nginx
+    build: ./nginx
+    volumes:
+      - static_files:/var/www/html/staticfiles
     ports:
       - 7654:80
     depends_on:
