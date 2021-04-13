@@ -24,22 +24,24 @@ django-ordered-model==3.4.1
     # via -r requirements.in
 django-picklefield==3.0.1
     # via django-constance
-django==3.1.6
+django==3.1.8
     # via
     #   -r requirements.in
     #   django-allauth
     #   django-picklefield
 django_constance[database]==2.8.0
     # via -r requirements.in
-django_crispy_forms==1.11.0
+django_crispy_forms==1.11.2
     # via -r requirements.in
-gunicorn==20.0.4
+gunicorn==20.1.0
     # via -r requirements.in
 idna==2.10
     # via requests
 oauthlib==3.1.0
     # via requests-oauthlib
-pip-tools==5.5.0
+pep517==0.10.0
+    # via pip-tools
+pip-tools==6.0.1
     # via -r requirements.in
 psycopg2-binary==2.8.6
     # via -r requirements.in
@@ -59,7 +61,9 @@ requests==2.25.1
     #   requests-oauthlib
 sqlparse==0.4.1
     # via django
-urllib3==1.26.3
+toml==0.10.2
+    # via pep517
+urllib3==1.26.4
     # via requests
 
 # The following packages are considered to be unsafe in a requirements file:
