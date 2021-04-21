@@ -1,7 +1,10 @@
 from constance import config
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
+from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, ListView
 
 from entries.forms import EntryForm
@@ -56,3 +59,14 @@ class AddEntryView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('log-view')
+
+
+@login_required
+@require_http_methods(['POST'])
+def ban_check(request):
+    user = request.POST['user']
+    if len(user) == 0:
+        count = 0
+    else:
+        count = Entry.objects.filter(user__iexact=user).count()
+    return render(request, 'entries/_found.html', {'user': user, 'count': count})

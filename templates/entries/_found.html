@@ -1,0 +1,6 @@
+{% if count > 0 %}
+  <div class="alert alert-warning">
+    {{ user }} has {{ count }} previous {% if count > 1 %}entries{% else %}entry{% endif %}.
+    <a href="{% url 'search'%}?q={{ user }}" class="alert-link" target="_blank">Click here</a> to see.
+  </div>
+{% endif %}

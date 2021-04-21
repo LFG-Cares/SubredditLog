@@ -7,6 +7,14 @@ from entries.models import Entry
 
 
 class EntryForm(forms.ModelForm):
+    user = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'hx-post': '/ban_check',
+            'hx-trigger': 'keyup changed delay: 250ms',
+            'hx-indicator': '.htmx-indicator',
+            'hx-target': '#user-notes',
+        }
+    ))
     ban_length = forms.IntegerField(required=False)
 
     def __init__(self, *args, **kwargs):
