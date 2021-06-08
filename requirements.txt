@@ -4,7 +4,7 @@
 #
 #    pip-compile
 #
-asgiref==3.3.1
+asgiref==3.3.4
     # via django
 certifi==2020.12.5
     # via requests
@@ -24,7 +24,7 @@ django-ordered-model==3.4.1
     # via -r requirements.in
 django-picklefield==3.0.1
     # via django-constance
-django==3.1.8
+django==3.2.4
     # via
     #   -r requirements.in
     #   django-allauth
@@ -63,7 +63,7 @@ sqlparse==0.4.1
     # via django
 toml==0.10.2
     # via pep517
-urllib3==1.26.4
+urllib3==1.26.5
     # via requests
 
 # The following packages are considered to be unsafe in a requirements file:
