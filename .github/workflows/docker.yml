@@ -3,8 +3,6 @@ on:
   push:
     tags:
       - v*
-    branches:
-      - 35/docker_build
 
 env:
   REGISTRY: ghcr.io
@@ -33,8 +31,7 @@ jobs:
         with:
           context: .
           file: Dockerfile.prod
-          #tag: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }}
           push: true
 
       - name: Build and Push Nginx Image
@@ -42,6 +39,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: nginx/
-          #tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-nginx:${{ github.event.release.tag_name }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-nginx:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-nginx:${{ github.event.release.tag_name }}
           push: true
