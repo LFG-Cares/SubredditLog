@@ -1,4 +1,4 @@
-Django==3.2.4
+Django~=3.2
 django-allauth==0.44.0
 django_constance[database]==2.8.0
 django_crispy_forms==1.11.2
