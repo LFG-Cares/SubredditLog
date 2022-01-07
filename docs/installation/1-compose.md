@@ -12,32 +12,76 @@ Install the following per Docker-provided documentation:
 
 ## Download SubredditLog
 
-Download the [latest stable release](https://github.com/seancallaway/SubredditLog/releases) from GitHub as a tarball or
-zip file and extract it to your desired path (e.g. `~/subredditlog/`).
+Create a directory of our choosing (e.g. `~/subredditlog/`) and enter it. In that directory, create `docker-compose.yml`
+with the following contents:
+
+```yaml
+version: '3.7'
+
+services:
+  app:
+    image: registry.gitlab.com/scallaway/subredditlog/subredditlog:latest
+    command: gunicorn subreddit_log.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_files:/home/app/web/staticfiles
+    expose:
+      - 8000
+    environment:
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=subreddit_log
+      - SQL_USER=srlog_user
+      - SQL_HOST=db
+      - SQL_PASSWORD=$DB_PASSWORD
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - SECRET_KEY=$SECRET_KEY
+      - DJANGO_ALLOWED_HOSTS=$ALLOWED_HOSTS
+    depends_on:
+      - db
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - psql_data:/var/lib/posgresql/data/
+    environment:
+      - POSTGRES_USER=srlog_user
+      - POSTGRES_DB=subreddit_log
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+  nginx:
+    image: registry.gitlab.com/scallaway/subredditlog/subredditlog-nginx:latest
+    volumes:
+      - static_files:/var/www/html/staticfiles
+    ports:
+      - 7654:80
+    depends_on:
+      - app
+
+
+volumes:
+  psql_data:
+  static_files:
+
+```
+
+Also create a `.env` file with the following contents:
+
+```ini
+SECRET_KEY=
+ALLOWED_HOSTS=
+DB_PASSWORD=
+```
 
 ## Configuration
 
-Move into the SubredditLog directory and make a copy of `.env.example` named `.env`. This file will hold 
-all of your local configuration parameters.
-
-```shell
-cp .env.example .env
-```
-
-Open `env.config` with your preferred text editor and configure each of the following required values:
-
-- `ALLOWED_HOSTS`
-- `SECRET_KEY`
-- `DB_PASSWORD`
+You will need to edit the `.env` file you just created as seen below.
 
 ### ALLOWED HOSTS
 
 This is a list of the valid hostnames and IP addresses by which this server can be reached. You must specify at least 
 one name or IP address. (Note that this does not restrict the locations from which SubredditLog may be accessed: It is 
 merely for 
-[HTTP host header validation](https://docs.djangoproject.com/en/3.1/topics/security/#host-headers-virtual-hosting).)
+[HTTP host header validation](https://docs.djangoproject.com/en/3.2/topics/security/#host-headers-virtual-hosting).)
 
-Each value should be separated by a space.
+Each value should be separated by a space. For example,
 
 ```shell
 ALLOWED_HOSTS=subredditlog.example.com 192.168.1.2
@@ -76,7 +120,7 @@ When you have finished modifying the configuration, remember to save the file.
 After the configuration has been set, you can bring up the compose stack with the following command:
 
 ```shell
-sudo docker-compose -f docker-compose.prod.yml up -d
+sudo docker-compose up -d
 ```
 
 If no error messages have been generated, then the application is running properly.
@@ -87,7 +131,7 @@ SubredditLog does not come with any predefined user accounts. You'll need to cre
 account) to be able to login. This can be created with the following command:
 
 ```shell
-sudo docker-compose -f docker-compose.prod.yml exec app python manage.py createsuperuser
+sudo docker-compose exec app python manage.py createsuperuser
 ```
 
 Follow the on-screen instructions, using your Reddit username as the username. Email address can be skipped by pressing 
