@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from ordered_model.models import OrderedModel
@@ -24,7 +26,7 @@ class Entry(models.Model):
 
     moderator = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, editable=False,
                                   related_name='entries')
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=date.today)
     user = models.CharField(max_length=20, blank=False, db_index=True)
     rule = models.ForeignKey(Rule, on_delete=models.SET_NULL, null=True, related_name='+')
     action = models.PositiveSmallIntegerField(choices=ACTION_CHOICES, default=ACTION_WARN)
