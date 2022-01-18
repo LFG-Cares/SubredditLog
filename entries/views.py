@@ -5,6 +5,7 @@ from constance import config
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html
@@ -152,3 +153,8 @@ def ban_check(request):
     else:
         count = Entry.objects.filter(user__iexact=user).count()
     return render(request, 'entries/_found.html', {'user': user, 'count': count})
+
+
+@require_http_methods(['GET'])
+def health_check(request):
+    return HttpResponse('OK', content_type='text/plain', status=200)
