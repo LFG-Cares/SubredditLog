@@ -1,14 +1,26 @@
+from logging import getLogger
+
+import openpyxl
 from constance import config
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.html import format_html
 from django.views.decorators.http import require_http_methods
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, TemplateView
 
+from accounts.models import User
 from entries.forms import EntryForm
+from entries.helpers import process_action
 from entries.models import Entry, Rule
+
+logger = getLogger(__name__)
+
+ACCEPTABLE_FILE_EXTENSIONS = [
+    '.xlsx'
+]
 
 
 class LogView(UserPassesTestMixin, ListView):
@@ -59,6 +71,76 @@ class AddEntryView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('log-view')
+
+
+class ImportEntriesView(LoginRequiredMixin, TemplateView):
+    template_name = 'entries/import.html'
+
+    def post(self, request, *args, **kwargs):
+        message = ''
+        file_object = request.FILES.get('file', None)
+        success = True
+
+        if f'.{file_object.name.split(".")[-1]}' not in ACCEPTABLE_FILE_EXTENSIONS:
+            logger.error(f'User attempted to upload {file_object.name}.')
+            success = False
+            valid_extensions = ', '.join(ACCEPTABLE_FILE_EXTENSIONS)
+            message = f'{file_object.name} is not a valid upload type. Please return to the previous page and try ' \
+                      f'your upload again using one of the valid file extensions: {valid_extensions}'
+        else:
+            if Entry.objects.count() > 0:
+                success = False
+                message = 'The database has existing log entries. The import function can only be run when no ' \
+                          'entries have been previously added.'
+            else:
+                workbook = openpyxl.load_workbook(file_object)
+                sheet = workbook.active
+                message = '<p>'
+                for i in range(2, sheet.max_row + 1):
+                    row_empty = False
+                    for j in range(1, 5):
+                        if not sheet.cell(row=i, column=j).value:
+                            row_empty = True
+                            break
+                    if row_empty:
+                        continue
+                    try:
+                        mod_name = str(sheet.cell(row=i, column=1).value).strip()
+                        date = sheet.cell(row=i, column=2).value.date()
+                        user = str(sheet.cell(row=i, column=3).value).strip()
+                        rule_str = str(sheet.cell(row=i, column=4).value).strip()
+                        action_str = str(sheet.cell(row=i, column=5).value).strip()
+                        notes = str(sheet.cell(row=i, column=6).value).strip()
+
+                        mod, mod_created = User.objects.get_or_create(username=mod_name)
+                        if mod_created:
+                            message += f'[{i}] Mod `{mod}` created.<br />'
+                        rule, rule_created = Rule.objects.get_or_create(name=rule_str)
+                        if rule_created:
+                            message += f'[{i}] Rule `{rule}` created.<br />'
+                        action, length = process_action(action_str)
+
+                        entry = Entry.objects.create(
+                            moderator=mod,
+                            date=date,
+                            user=user,
+                            rule=rule,
+                            action=action,
+                            ban_length=length,
+                            notes=notes,
+                        )
+
+                    except AttributeError as ex:
+                        message += f'There was an error processing line {i}.<br />'
+                        logger.error(f'On line {i}: {ex}')
+                        success = False
+                        continue
+
+                entry_count = Entry.objects.count()
+                message += f'</p><p>Imported {entry_count} entries.</p>'
+
+        return render(request, 'entries/complete.html',
+                      {'success': success, 'message': format_html(message), 'filename': file_object.name})
 
 
 @login_required

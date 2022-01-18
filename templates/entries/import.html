@@ -1,0 +1,34 @@
+{% extends "_main.html" %}
+
+{% block content %}
+
+  <div class="container">
+
+    <div class="card">
+      <div class="card-body">
+        <h1 class="card-title">Existing ModLog Import</h1>
+        <form method="post" id="uploadForm" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="file" class="form-label">Please select an Excel file to import.</label>
+            <input class="form-control-file" type="file" name="file" accept=".xlsx," required />
+          </div>
+          <button type="submit" id="submit" class="btn btn-primary">Import</button>
+        </form>
+        <p class="card-body" id="loadingMessage" style="display: none;">
+          <strong>Please wait while your file uploads. Do not navigate away from this page.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extrascripts %}
+  <script>
+    $("#uploadForm").bind('submit', function () {
+      $("#loadingMessage").show();
+      $("#submit").attr('disabled','disabled');
+    });
+  </script>
+{% endblock %}

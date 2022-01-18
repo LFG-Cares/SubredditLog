@@ -1,0 +1,23 @@
+{% extends "_main.html" %}
+
+{% block content %}
+
+  <div class="container">
+
+    <h1>Existing ModLog Import</h1>
+
+    {% if success %}
+      <p class="text-success">
+        <strong>{{ filename }} imported successfully!</strong>
+      </p>
+      {{ message }}
+    {% else %}
+      <p class="text-danger">
+        There were issues encountered when processing {{ filename }}
+      </p>
+      {{ message }}
+    {% endif %}
+
+  </div>
+
+{% endblock %}
