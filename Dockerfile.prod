@@ -32,7 +32,7 @@ WORKDIR $APP_HOME
 COPY ./entrypoint.sh $APP_HOME
 
 RUN apt update \
-    && apt -y install netcat \
+    && apt -y install netcat curl \
     && apt-get clean
 COPY --from=builder /install /usr/local
 
