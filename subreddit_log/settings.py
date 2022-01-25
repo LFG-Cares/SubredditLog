@@ -113,6 +113,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+ACCOUNT_ADAPTER = 'accounts.adapter.NoNewUsersAdapter'
+
 LOGIN_REDIRECT_URL = 'log-view'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'log-view'
 
