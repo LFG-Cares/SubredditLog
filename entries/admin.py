@@ -24,7 +24,14 @@ class EntryAdmin(admin.ModelAdmin):
         'action_string'
     )
 
-    form = EntryForm
+    fields = (
+        'user',
+        'date',
+        'rule',
+        'action',
+        'ban_length',
+        'notes',
+    )
 
     def save_model(self, request, obj, form, change):
         if not change:
