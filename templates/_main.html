@@ -41,15 +41,24 @@
         {% if user.is_superuser %}
           <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
         {% endif %}
-        <li class="nav-item">
-          {% if not user.is_authenticated %}
+        {% if not user.is_authenticated %}
+          <li class="nav-item">
             <a class="nav-link" href="{% url 'account_login' %}">Login</a>
-          {% else %}
-            <form method="post" action="{% url 'account_logout' %}">
-              {% csrf_token %}
-              <button type="submit" class="nav-link btn btn-link">Logout</button>
-            </form>
-          {% endif %}
+          </li>
+        {% else %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              {{ user.username }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLink">
+              <a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a>
+              <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item btn btn-link">Logout</button>
+              </form>
+            </div>
+        {% endif %}
         </li>
       </ul>
     </div>
