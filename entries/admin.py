@@ -17,9 +17,9 @@ class RuleAdmin(OrderedModelAdmin):
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
     list_display = (
+        'user',
         'date',
         'moderator',
-        'user',
         'rule',
         'action_string'
     )
