@@ -17,14 +17,21 @@ class RuleAdmin(OrderedModelAdmin):
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
     list_display = (
+        'user',
         'date',
         'moderator',
-        'user',
         'rule',
         'action_string'
     )
 
-    form = EntryForm
+    fields = (
+        'user',
+        'date',
+        'rule',
+        'action',
+        'ban_length',
+        'notes',
+    )
 
     def save_model(self, request, obj, form, change):
         if not change:
