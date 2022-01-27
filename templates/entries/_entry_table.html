@@ -14,7 +14,7 @@
   <tbody>
     {% for entry in entries %}
       <tr>
-        <td>{{ entry.date|date:"Y-m-d" }}</td>
+        <td class="text-nowrap">{{ entry.date|date:"Y-m-d" }}</td>
         <td><a target="_blank" href="https://www.reddit.com/u/{{ entry.user }}">/u/{{ entry.user }}</a></td>
         <td>{{ entry.rule }}</td>
         <td>{{ entry.action_string }}</td>
