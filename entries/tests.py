@@ -1,3 +1,5 @@
+from constance import config
+from constance.test import override_config
 from django.test import TestCase
 from django.urls import reverse
 
@@ -42,3 +44,8 @@ class ProtectedViewsTest(TestCase):
     def test_cannot_access_add_entry_view_as_anonymous(self):
         response = self.client.get(reverse('entry-create'), follow=True)
         self.assertRedirects(response, f"{reverse('account_login')}?next={reverse('entry-create')}")
+
+    def test_cannot_access_search_as_anonymous_when_private(self):
+        with override_config(PUBLIC_MODLOG=False):
+            response = self.client.get(reverse('search'))
+            self.assertRedirects(response, f"{reverse('account_login')}?next={reverse('search')}")
