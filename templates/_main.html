@@ -33,11 +33,13 @@
         {% endif %}
       </ul>
       <ul class="navbar-nav flex-row justify-content-between ml-auto">
-        <li class="nav-item">
-          <form method="get" action="{% url 'search' %}" class="form-inline mr-auto my-2 my-lg-0" novalidate>
-            <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search">
-          </form>
-        </li>
+        {% if config.PUBLIC_MODLOG or user.is_authenticated %}
+          <li class="nav-item">
+            <form method="get" action="{% url 'search' %}" class="form-inline mr-auto my-2 my-lg-0" novalidate>
+              <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search">
+            </form>
+          </li>
+        {% endif %}
         {% if user.is_superuser %}
           <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
         {% endif %}

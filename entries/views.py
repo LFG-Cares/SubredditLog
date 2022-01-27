@@ -46,11 +46,18 @@ class RulesView(ListView):
     queryset = Rule.objects.all()
 
 
-class Search(ListView):
+class Search(UserPassesTestMixin, ListView):
     template_name = 'entries/search.html'
     model = Entry
     context_object_name = 'entries'
-    paginate_by = 25
+    paginate_by = 253
+
+    def test_func(self):
+        if config.PUBLIC_MODLOG:
+            return True
+        elif self.request.user.is_authenticated:
+            return True
+        return False
 
     def get_queryset(self):
         query = self.request.GET.get('q')
