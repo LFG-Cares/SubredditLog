@@ -91,7 +91,8 @@ class EditEntryView(UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         """Allow only superusers and the adding moderator to edit."""
-        if self.request.user.is_superuser or self.request.user == self.object.moderator:
+        obj = self.get_object()  # Need to do this because it is run before self.object is assigned.
+        if self.request.user.is_superuser or self.request.user == obj.moderator:
             return True
         else:
             return False
