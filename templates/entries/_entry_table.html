@@ -8,6 +8,7 @@
       {% if user.is_authenticated %}
         <th scope="col">Mod</th>
         <th scope="col">Notes</th>
+        <th scope="col">&nbsp;</th>
       {% endif %}
     </tr>
   </thead>
@@ -21,11 +22,18 @@
         {% if user.is_authenticated %}
           <td>{{ entry.moderator.username }}</td>
           <td>{{ entry.notes }}</td>
+          <td>
+            {% if user.is_superuser or entry.moderator == user %}
+              <a class="btn btn-outline-warning" href="{% url 'entry-edit' entry.pk %}">Edit</a>
+            {% else %}
+              &nbsp;
+            {% endif %}
+          </td>
         {% endif %}
       </tr>
     {% empty %}
       <tr>
-        <td colspan="{% if user.is_authenticated %}6{% else %}4{% endif %}">
+        <td colspan="{% if user.is_authenticated %}7{% else %}4{% endif %}">
           {% if table_type == 'search' %}
             <b>No results for that search.</b>
           {% else %}
