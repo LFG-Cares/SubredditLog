@@ -22,6 +22,18 @@ pip install -r requirements.txt
 
 ## Release History
 
+- 0.2.1
+  - Adds ability for moderators to edit their entries and superusers to edit all entries
+- 0.2
+  - Adds real-time notification of previous entries for a user
+  - Adds ability to change your own password
+  - Adds link to Django Admin in top nav for superusers
+  - Allows importing of pre-existing mod logs in Excel format
+  - Adds ability to add earlier entries via Django admin
+- 0.1.3
+  - Update dependencies due to security issues 
+- 0.1.2
+  - Update dependencies due to security issues 
 - 0.1.1
   - Fixed bugs in styling of the admin panel
   - Fixed various documentation bugs.
