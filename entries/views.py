@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html
 from django.views.decorators.http import require_http_methods
-from django.views.generic import CreateView, ListView, TemplateView
+from django.views.generic import CreateView, ListView, TemplateView, UpdateView
 
 from accounts.models import User
 from entries.forms import EntryForm
@@ -79,6 +79,23 @@ class AddEntryView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('log-view')
+
+
+class EditEntryView(UserPassesTestMixin, UpdateView):
+    template_name = 'entries/edit_entry.html'
+    model = Entry
+    form_class = EntryForm
+
+    def get_success_url(self):
+        return reverse('log-view')
+
+    def test_func(self):
+        """Allow only superusers and the adding moderator to edit."""
+        obj = self.get_object()  # Need to do this because it is run before self.object is assigned.
+        if self.request.user.is_superuser or self.request.user == obj.moderator:
+            return True
+        else:
+            return False
 
 
 class ImportEntriesView(LoginRequiredMixin, TemplateView):
