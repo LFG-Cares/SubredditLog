@@ -175,6 +175,10 @@ def ban_check(request):
     if len(user) == 0:
         count = 0
     else:
+        if user[:2] == 'u/':
+            user = user[2:]
+        elif user[:3] == '/u/':
+            user = user[3:]
         count = Entry.objects.filter(user__iexact=user).count()
     return render(request, 'entries/_found.html', {'user': user, 'count': count})
 
