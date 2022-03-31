@@ -28,6 +28,16 @@ check_code_styling:
     refs:
       - merge_requests
 
+check_requirements:
+  stage: test
+  before_script:
+    - pip install safety
+  script:
+    - safety check -r requirements.txt
+  only:
+    refs:
+      - merge_requests
+
 build_docker_image:
   stage: build
   image: docker:latest
