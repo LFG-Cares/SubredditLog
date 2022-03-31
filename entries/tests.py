@@ -25,6 +25,28 @@ class EntryFormTest(TestCase):
             form.errors['__all__']
         )
 
+    def test_can_submit_user_in_u_slash_format(self):
+        form = EntryForm(data={
+            'user': 'u/thecal714',
+            'rule': self.rule1,
+            'action': Entry.ACTION_WARN,
+        })
+
+        self.assertTrue(form.is_valid())
+        entry = form.save()
+        self.assertEqual(entry.user, 'thecal714')
+
+    def test_can_submit_user_in_slash_u_slash_format(self):
+        form = EntryForm(data={
+            'user': '/u/thecal714',
+            'rule': self.rule1,
+            'action': Entry.ACTION_WARN,
+        })
+
+        self.assertTrue(form.is_valid())
+        entry = form.save()
+        self.assertEqual(entry.user, 'thecal714')
+
 
 class ProtectedViewsTest(TestCase):
 

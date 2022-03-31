@@ -32,6 +32,18 @@ class EntryForm(forms.ModelForm):
             Submit('submit', 'Save Entry', css_class='btn btn-success'),
         )
 
+    def clean_user(self):
+        """
+        Allow the `user` field to be entered in one of the following formats: <user>, u/<user>, or /u/<user>
+        """
+        username = self.cleaned_data.get('user')
+        if username[:2] == 'u/':
+            username = username[2:]
+        elif username[:3] == '/u/':
+            username = username[3:]
+
+        return username
+
     def clean(self):
         cleaned_data = super().clean()
         ban_length = cleaned_data.get('ban_length')
