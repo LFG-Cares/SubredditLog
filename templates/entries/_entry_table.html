@@ -21,7 +21,7 @@
         <td>{{ entry.action_string }}</td>
         {% if user.is_authenticated %}
           <td>{{ entry.moderator.username }}</td>
-          <td>{{ entry.notes }}</td>
+          <td>{{ entry.notes|urlizetrunc:15 }}</td>
           <td>
             {% if user.is_superuser or entry.moderator == user %}
               <a class="btn btn-outline-warning" href="{% url 'entry-edit' entry.pk %}">Edit</a>
