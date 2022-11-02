@@ -26,6 +26,13 @@
             Rules {% if request.resolver_match.url_name == 'rules-list' %} <span class="sr-only">(current)</span>{% endif %}
           </a>
         </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item{% if request.resolver_match.url_name == 'stats' %} active{% endif %}">
+            <a class="nav-link" href="{% url 'stats' %}">
+              Stats {% if request.resolver_match.url_name == 'stats' %} <span class="sr-only">(current)</span>{% endif %}
+            </a>
+          </li>
+        {% endif %}
         {% if config.SUBREDDIT %}
           <li class="nav-item">
             <a class="nav-link" href="https://www.reddit.com/r/{{ config.SUBREDDIT }}" target="_blank">Visit the Subreddit</a>
