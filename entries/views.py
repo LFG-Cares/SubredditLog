@@ -1,3 +1,4 @@
+from datetime import timedelta
 from logging import getLogger
 
 import openpyxl
@@ -5,10 +6,11 @@ from constance import config
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.timezone import now
 from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView
 
@@ -21,6 +23,21 @@ logger = getLogger(__name__)
 
 ACCEPTABLE_FILE_EXTENSIONS = [
     '.xlsx'
+]
+
+
+COLOR_PALETTE = [
+    '#FFEC21',
+    '#378AFF',
+    '#FFA32F',
+    '#F54F52',
+    '#93F03B',
+    '#9552EA',
+    '#ffffff',
+    '#000000',
+    '#aaaaaa',
+    '#cccccc',
+    '#666666',
 ]
 
 
@@ -186,3 +203,50 @@ def ban_check(request):
 @require_http_methods(['GET'])
 def health_check(request):
     return HttpResponse('OK', content_type='text/plain', status=200)
+
+
+class StatsView(TemplateView, LoginRequiredMixin):
+    template_name = 'entries/stats.html'
+
+
+@login_required
+def get_mod_actions_chart(request, days: int = 30):
+    end_date = now()
+    start_date = end_date - timedelta(days=days)
+
+    entries = Entry.objects.filter(date__range=[start_date, end_date])
+    active_mods = User.objects.filter(is_active=True, )
+
+    return JsonResponse({
+        'title': f'Actions by Mod for the past {days} days',
+        'data': {
+            'labels': [mod.username for mod in active_mods],
+            'datasets': [{
+                'label': 'Actions Logged',
+                'backgroundColor': [COLOR_PALETTE[i] if i < len(COLOR_PALETTE) else
+                                    COLOR_PALETTE[i % len(COLOR_PALETTE)] for i in range(len(active_mods))],
+                'data': [entries.filter(moderator__username=mod.username).count() for mod in active_mods]
+            }]
+        }
+    })
+
+
+@login_required
+def get_rules_chart(request, days: int = 30):
+    end_date = now()
+    start_date = end_date - timedelta(days=days)
+
+    entries = Entry.objects.filter(date__range=[start_date, end_date])
+    rules = Rule.objects.all()
+
+    return JsonResponse({
+        'title': f'Actions by Rule for the Past {days} day',
+        'data': {
+            'labels': [rule.name for rule in rules],
+            'datasets': [{
+                'label': 'Actions Logged',
+                'backgroundColor': COLOR_PALETTE[1],
+                'data': [entries.filter(rule=rule).count() for rule in rules]
+            }]
+        }
+    })

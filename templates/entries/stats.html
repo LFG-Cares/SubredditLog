@@ -1,0 +1,78 @@
+{% extends "_main.html" %}
+
+{% block extrahead %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" crossorigin="anonymous"
+          integrity="sha256-t9UJPrESBeG2ojKTIcFLPGF7nHi2vEc7f5A2KpH/UBU="></script>
+{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="actionsChart"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="rulesChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extrascript %}
+  <script>
+    let actionsCtx = document.getElementById("actionsChart").getContext("2d");
+    let actionsChart = new Chart(actionsCtx, {
+      type: "pie",
+      options: {
+        responsive: true
+      }
+    });
+    let rulesCtx = document.getElementById("rulesChart").getContext("2d");
+    let rulesChart = new Chart(rulesCtx, {
+      type: "bar",
+      options: {
+        responsive: true
+      }
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      loadAllCharts();
+    })
+
+    function loadChart(chart, endpoint) {
+      $.ajax({
+        url: endpoint,
+        type: "GET",
+        dataType: "json",
+        success: (jsonResponse) => {
+          const title = jsonResponse.title;
+          console.log(title)
+          const labels = jsonResponse.data.labels;
+          const datasets = jsonResponse.data.datasets;
+
+          // Reset the current chart
+          chart.data.datasets = [];
+          chart.data.labels = [];
+
+          // Load new data into the chart
+          chart.options.title.text = title;
+          chart.options.title.display = true;
+          chart.data.labels = labels;
+          datasets.forEach(dataset => {
+            chart.data.datasets.push(dataset);
+          });
+          chart.update();
+        },
+        error: () => console.log("Failed to fetch chart data from " + endpoint + "!")
+      });
+    }
+
+    function loadAllCharts() {
+      loadChart(actionsChart, "/charts/mod_actions");
+      loadChart(rulesChart, "/charts/rules");
+    }
+  </script>
+{% endblock %}
