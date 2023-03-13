@@ -1,0 +1,24 @@
+name: Django Tests
+
+on:
+  - pull_request
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Requirements
+        run: pip install -r requirements.txt
+
+      - name: Run Unit Tests
+        env:
+          SECRET_KEY: t3st1ng-SEcr3+-k3y
+        run: python manage.py test
