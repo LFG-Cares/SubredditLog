@@ -3,7 +3,7 @@ name: Create and Publish Latest Image
 on:
   push:
     branches:
-      - 2-gh-actions
+      - main
 
 env:
   REGISTRY: ghcr.io
