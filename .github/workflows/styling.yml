@@ -1,0 +1,22 @@
+name: Check Code Styling
+
+on:
+  - pull_request
+
+jobs:
+  test:
+    runs-on: self-hosted
+    continue-on-error: true
+    container: python:3.9-slim
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Requirements
+        run: pip install flake8 isort
+
+      - name: Run Flake8
+        run: flake8 --max-line-length 120 --exclude *migrations*
+
+      - name: Run isort
+        run: python -m isort . --line-length 120 --check-only -diff --skip-glob '*migrations*'
