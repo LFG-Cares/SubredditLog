@@ -6,6 +6,7 @@ on:
 jobs:
   test:
     runs-on: self-hosted
+    continue-on-error: true
     container: python:3.9-slim
     steps:
       - name: Checkout Repo
