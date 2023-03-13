@@ -6,14 +6,10 @@ on:
 jobs:
   test:
     runs-on: self-hosted
+    container: python:3.9-slim
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
 
       - name: Install Requirements
         run: pip install -r requirements.txt
