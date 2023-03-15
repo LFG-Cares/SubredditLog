@@ -1,4 +1,3 @@
-from constance import config
 from constance.test import override_config
 from django.contrib.auth import get_user_model
 from django.test import TestCase

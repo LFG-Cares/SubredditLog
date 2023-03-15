@@ -162,7 +162,7 @@ class ImportEntriesView(LoginRequiredMixin, TemplateView):
                             message += f'[{i}] Rule `{rule}` created.<br />'
                         action, length = process_action(action_str)
 
-                        entry = Entry.objects.create(
+                        Entry.objects.create(
                             moderator=mod,
                             date=date,
                             user=user,

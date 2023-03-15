@@ -28,7 +28,7 @@ class Command(BaseCommand):
 
         if Entry.objects.count() > 0:
             self.stderr.write(
-                self.style.ERROR(f'The database has existing log entries. Aborting.')
+                self.style.ERROR('The database has existing log entries. Aborting.')
             )
             return
 
