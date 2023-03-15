@@ -1,7 +1,6 @@
 from django.contrib import admin
 from ordered_model.admin import OrderedModelAdmin
 
-from entries.forms import EntryForm
 from entries.models import Entry, Rule
 
 

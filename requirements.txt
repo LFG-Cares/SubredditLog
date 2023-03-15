@@ -4,23 +4,23 @@
 #
 #    pip-compile
 #
-asgiref==3.5.2
+asgiref==3.6.0
     # via django
-build==0.9.0
+build==0.10.0
     # via pip-tools
-certifi==2022.9.24
+certifi==2022.12.7
     # via requests
 cffi==1.15.1
     # via cryptography
-charset-normalizer==2.1.1
+charset-normalizer==3.1.0
     # via requests
 click==8.1.3
     # via pip-tools
-cryptography==38.0.3
+cryptography==39.0.2
     # via pyjwt
 defusedxml==0.7.1
     # via python3-openid
-django==3.2.16
+django==3.2.18
     # via
     #   -r requirements.in
     #   django-allauth
@@ -31,7 +31,7 @@ django-constance[database]==2.8.0
     # via -r requirements.in
 django-crispy-forms==1.11.2
     # via -r requirements.in
-django-ordered-model==3.6
+django-ordered-model==3.7.2
     # via -r requirements.in
 django-picklefield==3.1
     # via django-constance
@@ -43,13 +43,11 @@ idna==3.4
     # via requests
 oauthlib==3.2.2
     # via requests-oauthlib
-openpyxl==3.0.10
+openpyxl==3.1.2
     # via -r requirements.in
-packaging==21.3
+packaging==23.0
     # via build
-pep517==0.13.0
-    # via build
-pip-tools==6.9.0
+pip-tools==6.12.3
     # via -r requirements.in
 psycopg2-binary==2.9.3
     # via -r requirements.in
@@ -57,13 +55,13 @@ pycparser==2.21
     # via cffi
 pyjwt[crypto]==2.6.0
     # via django-allauth
-pyparsing==3.0.9
-    # via packaging
+pyproject-hooks==1.0.0
+    # via build
 python3-openid==3.2.0
     # via django-allauth
-pytz==2022.6
+pytz==2022.7.1
     # via django
-requests==2.28.1
+requests==2.28.2
     # via
     #   django-allauth
     #   requests-oauthlib
@@ -74,10 +72,10 @@ sqlparse==0.4.3
 tomli==2.0.1
     # via
     #   build
-    #   pep517
-urllib3==1.26.12
+    #   pyproject-hooks
+urllib3==1.26.15
     # via requests
-wheel==0.37.1
+wheel==0.40.0
     # via pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:
