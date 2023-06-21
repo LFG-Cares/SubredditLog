@@ -11,7 +11,7 @@ env:
 
 jobs:
   build-and-push-images:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -44,15 +44,16 @@ jobs:
             type=semver,pattern={{version}}
 
       - name: Build and Push App Image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v4
         with:
           context: .
+          file: Dockerfile.prod
           push: true
           tags: ${{ steps.app-meta.outputs.tags }}
           labels: ${{ steps.app-meta.outputs.labels }}
 
       - name: Build and Push Nginx Image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v4
         with:
           context: nginx/
           push: true
