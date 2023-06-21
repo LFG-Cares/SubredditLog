@@ -1,0 +1,43 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+
+    {% if config.SUBREDDIT %}
+        {% if not errors and not status %}
+            <h1>Import Rules from /r/{{ config.SUBREDDIT }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    <p>
+                        This will import the current rules from /r/{{ config.SUBREDDIT }}. If you have existing
+                        rules, the imported rules will be appended to the end of the current list.
+                    </p>
+                    <input type="submit" value="Import" class="default"></input>
+                </div>
+            </form>
+        {% elif errors %}
+            <h1>Rules Could Not Be Imported</h1>
+            <p>
+                Errors were encountered while trying to fetch the rules for your subreddit.
+            </p>
+            <p>
+                {{ errors }}
+            </p>
+        {% else %}
+            <h1>Rules Were Imported</h1>
+            <p>
+                <ul>
+                    {% for entry in status %}
+                        <li>{{ entry }}</li>
+                    {% endfor %}
+                </ul>
+            </p>
+        {% endif %}
+    {% else %}
+        <h1>SubredditLog Configuration Incomplete</h1>
+        <p>
+            Please head over to the <a href="{% url 'admin:constance_config_changelist' %}">Constance config to finish configuring the site.</a>
+        </p>
+    {% endif %}
+
+{% endblock %}
