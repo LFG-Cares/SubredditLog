@@ -22,6 +22,10 @@ pip install -r requirements.txt
 
 ## Release History
 
+- 0.2.3
+  - Fix bug relating to history lookup.
+- 0.2.2
+  - Allow username entry in /u/ format.  
 - 0.2.1
   - Adds ability for moderators to edit their entries and superusers to edit all entries
 - 0.2

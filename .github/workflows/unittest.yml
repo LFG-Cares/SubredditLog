@@ -5,8 +5,8 @@ on:
 
 jobs:
   test:
-    runs-on: self-hosted
-    container: python:3.9-slim
+    runs-on: ubuntu-latest
+    container: python:3.9-slim-bullseye
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3

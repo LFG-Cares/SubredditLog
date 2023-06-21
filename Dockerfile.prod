@@ -1,7 +1,7 @@
 ###########
 # BUILDER #
 ###########
-FROM python:3.9-slim as builder
+FROM python:3.9-slim-bullseye as builder
 
 WORKDIR /usr/src/app
 
@@ -20,7 +20,7 @@ RUN pip install --no-warn-script-location --prefix=/install -r requirements.txt
 #########
 # FINAL #
 #########
-FROM python:3.9-slim
+FROM python:3.9-slim-bullseye
 
 RUN useradd --system -m app
 

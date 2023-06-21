@@ -5,9 +5,9 @@ on:
 
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     continue-on-error: true
-    container: python:3.9-slim
+    container: python:3.9-slim-bullseye
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
