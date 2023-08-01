@@ -22,6 +22,10 @@ pip install -r requirements.txt
 
 ## Release History
 
+- 0.3
+  - Allow importing of subreddit rules.
+  - Add statistic charts providing information on mod activity and rules violated.
+  - Provide docker images for both ARM64 and AMD64.
 - 0.2.3
   - Fix bug relating to history lookup.
 - 0.2.2
