@@ -39,7 +39,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_BASE}}
           tags: |
-            type=match,pattern=v(.*)
+            type=match,pattern=v(.*),group=1
 
       - name: Extract Metadata for Nginx Container
         id: nginx-meta
@@ -47,7 +47,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_BASE}}-nginx
           tags: |
-            type=match,pattern=v(.*)
+            type=match,pattern=v(.*),group=1
 
       - name: Build and Push App Image
         uses: docker/build-push-action@v4
