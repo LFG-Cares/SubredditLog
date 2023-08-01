@@ -27,6 +27,23 @@ To add a rule, click the Add Rule button in the top right corner.
 
 Enter the title and description of your rule, then click Save.
 
+### Importing Rules
+
+If you'd prefer, you can import the rules from your subreddit. Rules will be imported using the subreddit rule's short
+name as the rule name and the subreddit rule's full description as the rule description. The correlation is shown in the
+screenshots below.
+
+![Subreddit Rule](subreddit_rules.png "A rule as seen on the subreddit rules page")
+![Log Rule](log_rules.png "The same rule, as imported into the log")
+
+In the admin panel, under Entries, click on Rules. In the top right, next to Add Rule, is the Import Rules button.
+This function requires that you've already completed the steps in "Site Configuration" above.
+
+![Import Rules Page](import_rules.png "The 'Import Rules' Page")
+
+Click "Import" to confirm that you want to import the subreddit's rules. If successful, the imported rules will be
+listed.
+
 ### Reordering Rules
 
 You can reorder rules to match your subreddit's rule order by clicking on the arrows to the right of the rules.
