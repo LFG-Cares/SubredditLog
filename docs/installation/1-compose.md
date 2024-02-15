@@ -20,7 +20,7 @@ version: '3.7'
 
 services:
   app:
-    image: ghcr.io/lfg-cares/subredditlog:0.3
+    image: ghcr.io/lfg-cares/subredditlog:0.3.2
     command: gunicorn subreddit_log.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_files:/home/app/web/staticfiles
@@ -47,7 +47,7 @@ services:
       - POSTGRES_DB=subreddit_log
       - POSTGRES_PASSWORD=$DB_PASSWORD
   nginx:
-    image: ghcr.io/lfg-cares/subredditlog-nginx:0.3
+    image: ghcr.io/lfg-cares/subredditlog-nginx:0.3.2
     volumes:
       - static_files:/var/www/html/staticfiles
     ports:
