@@ -15,7 +15,11 @@ class EntryForm(forms.ModelForm):
             'hx-target': '#user-notes',
         }
     ))
-    ban_length = forms.IntegerField(required=False)
+    ban_length = forms.IntegerField(required=False, widget=forms.NumberInput(
+        attrs={
+            'onchange': 'setTempBan(this.value)'
+        }
+    ))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

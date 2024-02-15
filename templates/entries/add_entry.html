@@ -17,5 +17,13 @@
     document.body.addEventListener('htmx:configRequest', (event) => {
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
       })
+    function setTempBan(value) {
+        var entryAction = document.getElementById("id_action");
+        if (value === "") {
+            entryAction.selectedIndex = 0;
+        } else {
+            entryAction.selectedIndex = 1;
+        }
+    }
   </script>
 {% endblock %}
