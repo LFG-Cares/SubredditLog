@@ -17,7 +17,7 @@ class EntryForm(forms.ModelForm):
     ))
     ban_length = forms.IntegerField(required=False, widget=forms.NumberInput(
         attrs={
-            'onchange': 'setTempBan(this.value)'
+            'oninput': 'setTempBan(this.value)'
         }
     ))
 
