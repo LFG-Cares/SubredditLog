@@ -16,7 +16,7 @@
     {% for entry in entries %}
       <tr>
         <td class="text-nowrap">{{ entry.date|date:"Y-m-d" }}</td>
-        <td><a target="_blank" href="{% url 'user' entry.user %}">/u/{{ entry.user }}</a></td>
+        <td><a href="{% url 'user' entry.user %}">/u/{{ entry.user }}</a></td>
         <td>{{ entry.rule }}</td>
         <td>{{ entry.action_string }}</td>
         {% if user.is_authenticated %}
