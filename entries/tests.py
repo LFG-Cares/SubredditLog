@@ -130,4 +130,4 @@ class PageTests(TestCase):
         response = self.client.get(reverse('user', kwargs={'username': self.entry.user}))
 
         self.assertEqual(response.status_code, 200)
-        self.assertInHTML(f'https://www.reddit.com/u/{self.entry.user}', response.body)
+        self.assertContains(response, f'https://www.reddit.com/u/{self.entry.user}')
