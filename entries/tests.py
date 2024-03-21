@@ -108,3 +108,25 @@ class ProtectedViewsTest(TestCase):
         self.client.login(username='su', password='super123')
         response = self.client.get(reverse('log-view'))
         self.assertContains(response, self.button_code)
+
+
+class PageTests(TestCase):
+
+    def setUp(self) -> None:
+        self.note = 'This guy stinks on ice.'
+        self.mod1 = get_user_model().objects.create_user(username='mod1', password='testing321')
+        self.rule1 = Rule.objects.create(name='Be civil')
+        self.entry = Entry.objects.create(
+            moderator=self.mod1,
+            user='thecal714',
+            rule=self.rule1,
+            action=Entry.ACTION_PERM_BAN,
+            notes=self.note,
+        )
+
+    def test_profile_link_on_user_page(self):
+        self.client.login(username='mod1', password='testing321')
+        response = self.client.get(reverse('user', kwargs={'username': self.entry.user}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, f'https://www.reddit.com/u/{self.entry.user}')

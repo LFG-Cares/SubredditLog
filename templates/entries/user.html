@@ -1,0 +1,22 @@
+{% extends "_main.html" %}
+
+{% block title %}SubredditLog Entries for {{ username }}{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+      <div class="row mt-2 px-2 justify-content-end">
+        <a class="btn btn-success" target="_blank" href="https://www.reddit.com/u/{{ username }}">View Reddit Profile</a>
+        {% if user.is_authenticated %}
+          <a class="btn btn-info ml-1" href="{% url 'entry-create' %}">Add Entry</a>
+        {% endif %}
+      </div>
+    {% include 'entries/_entry_table.html' with table_type='userpage' %}
+
+    {% if is_paginated %}
+      {% load pagination_tags %}
+      <div class="row mt-4 justify-content-center align-items-center">
+        {% get_pagination 1 2 %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
