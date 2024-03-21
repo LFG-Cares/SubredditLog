@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from entries.views import (AddEntryView, EditEntryView, ImportEntriesView, LogView, RulesView, Search, StatsView,
-                           ban_check, health_check)
+                           UserView, ban_check, health_check)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('import', ImportEntriesView.as_view(), name='import-entries'),
     path('ban_check', ban_check, name='ban-check'),
     path('search', Search.as_view(), name='search'),
+    path('user/<str:username>', UserView.as_view(), name='user'),
     path('rules', RulesView.as_view(), name='rules-list'),
     path('stats', StatsView.as_view(), name='stats'),
     path('charts/', include('entries.chart_urls')),

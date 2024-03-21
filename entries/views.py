@@ -67,7 +67,7 @@ class Search(UserPassesTestMixin, ListView):
     template_name = 'entries/search.html'
     model = Entry
     context_object_name = 'entries'
-    paginate_by = 253
+    paginate_by = 25
 
     def test_func(self):
         if config.PUBLIC_MODLOG:
@@ -83,6 +83,29 @@ class Search(UserPassesTestMixin, ListView):
         return Entry.objects.filter(
             Q(user__icontains=query) | Q(notes__icontains=query)
         )
+
+
+class UserView(UserPassesTestMixin, ListView):
+    template_name = 'entries/user.html'
+    model = Entry
+    context_object_name = 'entries'
+    paginate_by = 25
+
+    def test_func(self):
+        if config.PUBLIC_MODLOG or self.request.user.is_authenticated:
+            return True
+        return False
+
+    def get_queryset(self):
+        username = self.kwargs.get('username')
+        return Entry.objects.filter(
+            Q(user__icontains=username) | Q(notes__icontains=username)
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.kwargs.get('username')
+        return context
 
 
 class AddEntryView(LoginRequiredMixin, CreateView):
