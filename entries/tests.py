@@ -115,7 +115,6 @@ class PageTests(TestCase):
     def setUp(self) -> None:
         self.note = 'This guy stinks on ice.'
         self.mod1 = get_user_model().objects.create_user(username='mod1', password='testing321')
-        self.mod2 = get_user_model().objects.create_user(username='mod2', password='testing123')
         self.rule1 = Rule.objects.create(name='Be civil')
         self.entry = Entry.objects.create(
             moderator=self.mod1,
@@ -126,7 +125,7 @@ class PageTests(TestCase):
         )
 
     def test_profile_link_on_user_page(self):
-        self.client.login(username='mod2', password='testing123')
+        self.client.login(username='mod1', password='testing321')
         response = self.client.get(reverse('user', kwargs={'username': self.entry.user}))
 
         self.assertEqual(response.status_code, 200)
