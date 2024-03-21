@@ -11,3 +11,4 @@ requirements.in
 docs/
 mkdocs.yml
 nginx/
+.readthedocs.yaml
