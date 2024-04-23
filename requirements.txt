@@ -37,7 +37,7 @@ django-picklefield==3.1
     # via django-constance
 et-xmlfile==1.1.0
     # via openpyxl
-gunicorn==20.1.0
+gunicorn==22.0.0
     # via -r requirements.in
 idna==3.6
     # via requests
@@ -46,7 +46,9 @@ oauthlib==3.2.2
 openpyxl==3.1.2
     # via -r requirements.in
 packaging==24.0
-    # via build
+    # via
+    #   build
+    #   gunicorn
 pip-tools==6.14.0
     # via -r requirements.in
 psycopg2-binary==2.9.6
