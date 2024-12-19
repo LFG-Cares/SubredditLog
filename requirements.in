@@ -1,9 +1,9 @@
 Django~=3.2
-django-allauth==0.47.0
-django_constance[database]==2.8.0
-django_crispy_forms==1.11.2
+django-allauth~=0.50
+django_constance[database]~=2.8
+django_crispy_forms~=1.11
 django-ordered-model~=3.4
 gunicorn~=22.0
 openpyxl~=3.0
 pip-tools~=6.9
-psycopg2-binary==2.9.6
+psycopg2-binary==2.9.10
