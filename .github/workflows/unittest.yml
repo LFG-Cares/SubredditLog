@@ -6,7 +6,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: python:3.9-slim-bullseye
+    container: python:3.11-slim-bullseye
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
