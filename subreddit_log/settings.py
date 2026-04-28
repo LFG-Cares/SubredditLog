@@ -26,8 +26,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'constance',
-    'constance.backends.database',
+    'constance.backends.database',  # TODO: Validate this is needed. - SC
     'crispy_forms',
+    'crispy_bootstrap4',
     'ordered_model',
 
     'accounts',
