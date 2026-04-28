@@ -8,24 +8,14 @@ asgiref==3.8.1
     # via django
 build==1.2.2.post1
     # via pip-tools
-certifi==2025.1.31
-    # via requests
-cffi==1.17.1
-    # via cryptography
-charset-normalizer==3.4.1
-    # via requests
 click==8.1.8
     # via pip-tools
-cryptography==44.0.2
-    # via pyjwt
-defusedxml==0.7.1
-    # via python3-openid
 django==3.2.25
     # via
     #   -r requirements.in
     #   django-allauth
     #   django-picklefield
-django-allauth==0.50.0
+django-allauth==0.63.6
     # via -r requirements.in
 django-constance[database]==2.8.0
     # via
@@ -41,12 +31,8 @@ et-xmlfile==2.0.0
     # via openpyxl
 gunicorn==23.0.0
     # via -r requirements.in
-idna==3.10
-    # via requests
 importlib-metadata==8.6.1
     # via build
-oauthlib==3.2.2
-    # via requests-oauthlib
 openpyxl==3.1.5
     # via -r requirements.in
 packaging==24.2
@@ -57,24 +43,12 @@ pip-tools==7.4.1
     # via -r requirements.in
 psycopg2-binary==2.9.6
     # via -r requirements.in
-pycparser==2.22
-    # via cffi
-pyjwt[crypto]==2.10.1
-    # via django-allauth
 pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
-python3-openid==3.2.0
-    # via django-allauth
 pytz==2025.2
     # via django
-requests==2.32.3
-    # via
-    #   django-allauth
-    #   requests-oauthlib
-requests-oauthlib==2.0.0
-    # via django-allauth
 sqlparse==0.5.3
     # via django
 tomli==2.2.1
@@ -83,8 +57,6 @@ tomli==2.2.1
     #   pip-tools
 typing-extensions==4.13.2
     # via asgiref
-urllib3==2.4.0
-    # via requests
 wheel==0.45.1
     # via pip-tools
 zipp==3.21.0
