@@ -14,7 +14,7 @@ charset-normalizer==3.4.7
     # via requests
 click==8.1.8
     # via pip-tools
-crispy-bootstrap4==2025.6
+crispy-bootstrap4==2026.2
     # via -r requirements.in
 django==5.2.13
     # via
@@ -26,7 +26,7 @@ django-allauth==0.63.6
     # via -r requirements.in
 django-constance==4.3.5
     # via -r requirements.in
-django-crispy-forms==2.5
+django-crispy-forms==2.6
     # via
     #   -r requirements.in
     #   crispy-bootstrap4
@@ -44,7 +44,7 @@ packaging==24.2
     # via
     #   build
     #   gunicorn
-pip-tools==7.4.1
+pip-tools==7.5.3
     # via -r requirements.in
 psycopg2-binary==2.9.6
     # via -r requirements.in
