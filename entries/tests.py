@@ -83,6 +83,16 @@ class ProtectedViewsTest(TestCase):
         self.assertRedirects(response,
                              f"{reverse('account_login')}?next={reverse('entry-edit', kwargs={'pk': self.entry.pk})}")
 
+    def test_cannot_access_stats_as_anonymous_when_public(self):
+        with override_config(PUBLIC_MODLOG=True):
+            response = self.client.get(reverse('stats'))
+            self.assertRedirects(response, f"{reverse('account_login')}?next={reverse('stats')}")
+
+    def test_can_access_stats_as_mod(self):
+        self.client.login(username='mod1', password='testing321')
+        response = self.client.get(reverse('stats'))
+        self.assertEqual(response.status_code, 200)
+
     def test_cannot_see_edit_button_as_different_nonsuperuser(self):
         self.client.login(username='mod2', password='testing123')
         response = self.client.get(reverse('log-view'))
