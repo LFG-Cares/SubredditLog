@@ -30,7 +30,7 @@ services:
   db:
     image: postgres:18-alpine
     volumes:
-      - psql_data:/var/lib/posgresql/
+      - psql_data:/var/lib/postgresql/
     environment:
       - POSTGRES_USER=srlog_user
       - POSTGRES_DB=subreddit_log
