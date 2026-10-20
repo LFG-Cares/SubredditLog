@@ -3,9 +3,11 @@ from django.urls import include, path
 
 from entries.views import (AddEntryView, EditEntryView, ImportEntriesView, LogView, RulesView, Search, StatsView,
                            UserView, ban_check, health_check)
+from subreddit_log.api import api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/', api.urls),
     path('', LogView.as_view(), name='log-view'),
     path('add_entry', AddEntryView.as_view(), name='entry-create'),
     path('edit_entry/<int:pk>', EditEntryView.as_view(), name='entry-edit'),
