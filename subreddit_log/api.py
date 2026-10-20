@@ -14,3 +14,4 @@ api = NinjaAPI(
     auth=TokenAuth(),
     docs_url=None,
 )
+api.add_router('/entries', 'entries.api.router')

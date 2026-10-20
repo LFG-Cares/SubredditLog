@@ -140,3 +140,10 @@ class PageTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, f'https://www.reddit.com/u/{self.entry.user}')
+
+
+class APITests(TestCase):
+
+    def test_list_entries_requires_auth(self):
+        response = self.client.get('/api/v1/entries')
+        self.assertEqual(response.status_code, 401)
