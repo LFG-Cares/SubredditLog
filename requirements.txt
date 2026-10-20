@@ -4,8 +4,6 @@
 #
 #    pip-compile
 #
---index-url https://redfin.jfrog.io/artifactory/api/pypi/pypi-prod/simple
-
 asgiref==3.12.1
     # via django
 build==1.6.1
