@@ -10,7 +10,7 @@ class EntryForm(forms.ModelForm):
     user = forms.CharField(widget=forms.TextInput(
         attrs={
             'hx-post': '/ban_check',
-            'hx-trigger': 'keyup changed delay: 250ms',
+            'hx-trigger': 'keyup changed delay:250ms',
             'hx-indicator': '.htmx-indicator',
             'hx-target': '#user-notes',
         }

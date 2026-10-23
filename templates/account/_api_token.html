@@ -1,0 +1,17 @@
+{% if user.token %}
+  <p>Your API token was created on {{ user.token_created_at|date:"N j, Y, P T" }}.</p>
+  <p class="text-warning">Regenerating it will immediately revoke your current token.</p>
+  <button class="btn btn-warning"
+          hx-post="{%  url 'api_token' %}"
+          hx-target="#apiTokenModalBody"
+          hx-confirm="Revoke your current token and create a new one?">
+    Regenerate Token
+  </button>
+{% else %}
+  <p>You don't have an API token yet.</p>
+  <button class="btn btn-success"
+          hx-post="{% url 'api_token' %}"
+          hx-target="#apiTokenModalBody">
+    Generate Token
+  </button>
+{% endif %}

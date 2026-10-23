@@ -228,7 +228,7 @@ def health_check(request):
     return HttpResponse('OK', content_type='text/plain', status=200)
 
 
-class StatsView(TemplateView, LoginRequiredMixin):
+class StatsView(LoginRequiredMixin, TemplateView):
     template_name = 'entries/stats.html'
 
 
