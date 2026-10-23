@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.test import TestCase
 from django.utils import timezone
+from django.urls import reverse
 
 from accounts.models import TOKEN_PREFIX, authenticate_token
 
@@ -25,6 +26,54 @@ class TestUserModel(TestCase):
         user = create_user()
 
         self.assertIn(f'/u/{user.username}', user.link)
+
+
+class TestApiTokenView(TestCase):
+
+    def setUp(self) -> None:
+        self.user = create_user()
+        self.client.login(username=self.user.username, password=PASSWORD)
+        self.url = reverse('api_token')
+
+    def test_requires_login(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertRedirects(response, f'{reverse("account_login")}?next={self.url}')
+
+    def test_get_without_token_offers_generate(self):
+        self.assertContains(self.client.get(self.url), 'Generate Token')
+
+    def test_get_with_token_offers_regenerate(self):
+        self.user.issue_token()
+        self.assertContains(self.client.get(self.url), 'Regenerate Token')
+
+    def test_get_does_not_change_token(self):
+        self.user.issue_token()
+        self.user.refresh_from_db()
+        before = self.user.token
+
+        self.client.get(self.url)
+        self.user.refresh_from_db()
+
+        self.assertEqual(before, self.user.token)
+
+    def test_post_issues_token_and_shows_it_once(self):
+        response = self.client.post(self.url)
+        raw = response.context['token']
+
+        self.assertContains(response, raw)
+        self.assertEqual(authenticate_token(raw), self.user)
+        self.assertNotContains(self.client.get(self.url), raw)
+
+    def test_post_revokes_previous_token(self):
+        old = self.user.issue_token()
+        self.client.post(self.url)
+
+        self.assertIsNone(authenticate_token(old))
+
+    def test_responses_are_not_cached(self):
+        for response in (self.client.get(self.url), self.client.post(self.url)):
+            self.assertIn('no-store', response['Cache-Control'])
 
 
 class TestUserToken(TestCase):
