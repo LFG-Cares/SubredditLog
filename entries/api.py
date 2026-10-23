@@ -23,7 +23,7 @@ class EntryOut(ModelSchema):
         ]
 
 
-@router.get('', response=list[EntryOut], auth=None)
+@router.get('', response=list[EntryOut])
 @paginate(PageNumberPagination, page_size=20)
 def list_entries(request):
     return Entry.objects.select_related('moderator')
