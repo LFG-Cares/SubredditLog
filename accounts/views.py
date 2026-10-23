@@ -8,6 +8,7 @@ from django.views.decorators.http import require_http_methods
 
 logger = getLogger(__name__)
 
+
 @never_cache
 @login_required
 @require_http_methods(['GET', 'POST'])
