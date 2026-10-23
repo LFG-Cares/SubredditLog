@@ -1,0 +1,14 @@
+<p>
+  Here is your new API token. Copy it now as <strong>you won't be able to see it again.</strong>
+</p>
+<div class="input-group mb-2">
+  <input type="text" class="form-control" id="apiTokenValue" value="{{ token }}" readonly>
+  <div class="input-group-append">
+    <button class="btn btn-outline-light" type="button"
+            onclick="navigator.clipboard.writeText(document.getElementById('apiTokenValue').value); this.textContent = 'Copied';"
+          >Copy</button>
+  </div>
+</div>
+<small class="text-muted">
+  Send it as <code>Authorization: Bearer &lt;token&gt;</code>
+</small>
